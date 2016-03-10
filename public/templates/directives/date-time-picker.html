@@ -1,0 +1,19 @@
+<div class="row" ng-controller = "DateTimeController">
+  <div class="col-md-4 col-md-offset-2">
+    <p class="input-group">
+      <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="newSurvey.publishDate.startDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" current-text="Avui" clear-text="Esborrar" close-text="Tancar" alt-input-formats="altInputFormats" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </p>
+  </div>
+
+  <div class="col-md-4">
+    <p class="input-group">
+      <input type="text" class="form-control" uib-datepicker-popup ng-model="newSurvey.publishDate.endDate" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" current-text="Avui" clear-text="Esborrar" close-text="Tancar" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </p>
+  </div>
+</div>  

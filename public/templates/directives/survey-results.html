@@ -1,0 +1,10 @@
+<ul class="list-unstyled">  
+	<li ng-repeat = "question in survey.questions">
+	  <h4>{{$index+1}}. {{question.text}}</h4>     
+	  	<ul class="list-group">
+		 	<li class="list-group-item" ng-repeat = "answer in question.choices"><span class="badge">{{answer.votes}}</span>  {{answer.text}}</li>  
+		</ul>
+	</li>
+<ul>
+		
+
