@@ -1,102 +1,57 @@
 angular.module('VotesProject').controller('DateTimeController',  function ($scope) {
-	  $scope.today = function() {
-	    $scope.newSurvey.publishDate.startDate = new Date();
-	    $scope.newSurvey.publishDate.endDate = new  Date();
-	  };
-	  $scope.today();
+	var that = $scope;
 
-	  $scope.clear = function() {
-	    $scope.startDate = null;
-	    $scope.endDdate = null;
-	  };
+    var in10Days = new Date();
+    in10Days.setDate(in10Days.getDate() + 10);
 
-	  $scope.inlineOptions = {
-	    customClass: getDayClass,
-	    minDate: new Date(),
-	    showWeeks: true
-	  };
+    $scope.newSurvey.publishDate.startDate = new Date();
+    $scope.newSurvey.publishDate.endDate = in10Days;
+    
 
-	  $scope.dateOptions = {
-	    dateDisabled: disabled,
-	    formatYear: 'yy',
-	    maxDate: new Date(2020, 5, 22),
-	    minDate: new Date(),
-	    startingDay: 1
-	  };
+    $scope.open = {
+        
+        startDate: false,
+        endDate: false
+        
+    };
 
-	  // Disable weekend selection
-	  function disabled(data) {
-	    var date = data.date,
-	      mode = data.mode;
-	    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
-	  }
+    // Disable today selection
+    $scope.disabled = function(date, mode) {
+        return (mode === 'day' && (new Date().toDateString() == date.toDateString()));
+    };
 
-	  $scope.toggleMin = function() {
-	    $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
-	    $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
-	  };
+    $scope.dateOptions = {
+        showWeeks: false,
+        startingDay: 1
+    };
 
-	  $scope.toggleMin();
+    $scope.timeOptions = {
+        readonlyInput: false,
+        showMeridian: false
+    };
 
-	  $scope.open1 = function() {
-	    $scope.popup1.opened = true;
-	    console.log($scope.endDate);
-	    
-	  };
+    $scope.dateModeOptions = {
+        minMode: 'year',
+        maxMode: 'year'
+    };
 
-	  $scope.open2 = function() {
-	    $scope.popup2.opened = true;
-	   };
+    $scope.openCalendar = function(e, date) {
+        that.open[date] = true;
+    };
 
-	  $scope.setDate = function(year, month, day) {
-	    $scope.newSurvey.publishDate.startDate  = new Date(year, month, day);
-	    $scope.newSurvey.publishDate.endDate = new Date(year, month, day);
-	    console.log($scope.endDate);
-	    
-	  };
+    // watch date4 and date5 to calculate difference
+   /* var unwatch = $scope.$watch(function() {
+        return that.dates;
+    }, function() {
+        if (that.dates.date4 && that.dates.date5) {
+            var diff = that.dates.date4.getTime() - that.dates.date5.getTime();
+            that.dayRange = Math.round(Math.abs(diff/(1000*60*60*24)))
+        } else {
+            that.dayRange = 'n/a';
+        }
+    }, true);*/
 
-	  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-	  $scope.format = $scope.formats[0];
-	  $scope.altInputFormats = ['M!/d!/yyyy'];
-
-	  $scope.popup1 = {
-	    opened: false
-	  };
-
-	  $scope.popup2 = {
-	    opened: false
-	  };
-
-	  var tomorrow = new Date();
-	  tomorrow.setDate(tomorrow.getDate() + 1);
-	  var afterTomorrow = new Date();
-	  afterTomorrow.setDate(tomorrow.getDate() + 1);
-	  $scope.events = [
-	    {
-	      date: tomorrow,
-	      status: 'full'
-	    },
-	    {
-	      date: afterTomorrow,
-	      status: 'partially'
-	    }
-	  ];
-
-	  function getDayClass(data) {
-	    var date = data.date,
-	      mode = data.mode;
-	    if (mode === 'day') {
-	      var dayToCheck = new Date(date).setHours(0,0,0,0);
-
-	      for (var i = 0; i < $scope.events.length; i++) {
-	        var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
-
-	        if (dayToCheck === currentDay) {
-	          return $scope.events[i].status;
-	        }
-	      }
-	    }
-
-	    return '';
-	  }
+    $scope.$on('$destroy', function() {
+        unwatch();
+    });
 });

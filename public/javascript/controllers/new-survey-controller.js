@@ -52,6 +52,7 @@ angular.module('VotesProject').controller('NewSurveyController', ['Survey', '$sc
 
           Survey.create($scope.newSurvey)          
                   .success(function(data) {
+                    console.log("newSurvey:" + $scope.newSurvey.publishDate.startDate);
                       $scope.newSurvey = { title: '',
                         questions: [{text: '',
                                            choices: [{text:'', votes: 0}]}
