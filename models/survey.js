@@ -20,7 +20,8 @@ var SurveySchema = new mongoose.Schema({
 	title: String,
 	questions: [questionSchema],
 	submissions: [submissionSchema],
-	publishDate: {startDate: Date, endDate: Date}
+	publishDate: { startDate: Date, endDate: Date },
+	state: Number
 
 });
 

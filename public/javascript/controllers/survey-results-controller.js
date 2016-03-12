@@ -28,5 +28,23 @@ angular.module('VotesProject').controller('SurveyResultsController',
 
 	    $scope.selectSurvey = function(survey) {
 		    $scope.selectedSurvey = survey;
+    	};  
+
+    	$scope.getClass = function(survey) {
+    		var  className;
+    		switch (survey.state){
+    			case 0: 
+    				className = "list-group-item-danger";
+    				break;
+				case 1: 
+					className = "list-group-item-warning";
+					break;
+				case 2:
+					className = "list-group-item-info";
+					break;
+				default:
+        			className = "list-group-item-info";
+    		}
+		    return className;
     	};    	   
 	});

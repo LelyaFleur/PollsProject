@@ -15,14 +15,30 @@
 			
 
 			<ul class="list-group">
-				 <li class="list-group-item" ng-repeat="survey in surveys">
+				 <li class="list-group-item" ng-repeat="survey in surveys | filter: {state: 2}" ng-class="getClass(survey)">
+				 	<a ng-click="show = !show; selectSurvey(survey);" >{{survey.title}}</a>
+			 		<div ng-if="selectedSurvey === survey">
+  						<survey-results ng-show = "show" survey="selectedSurvey" ></survey-results>
+      				</div>	
+				</li>
+			</ul>
+			<ul class="list-group">
+				 <li class="list-group-item" ng-repeat="survey in surveys | filter: {state: 1}" ng-class="getClass(survey)">
+				 	<a ng-click="show = !show; selectSurvey(survey);" >{{survey.title}}</a>
+			 		<div ng-if="selectedSurvey === survey">
+		  				<survey-preview ng-show = "show" survey="selectedSurvey" ></survey-preview>
+		 			</div> 	
+				</li>
+			</ul>
+			<ul class="list-group">
+				 <li class="list-group-item" ng-repeat="survey in surveys | filter: {state: 0}" ng-class="getClass(survey)">
 				 	<a ng-click="show = !show; selectSurvey(survey);" >{{survey.title}}</a>
 				 	<a ng-click="removeSurvey(survey)">
 	  						<span class="glyphicon glyphicon-remove pull-right" style="color:#D3D3D3;"></span>
 	  				</a>
 			 		<div ng-if="selectedSurvey === survey">
-  						<survey-results ng-show = "show" survey="selectedSurvey" ></survey-results>
-      				</div>	
+		  				<survey-preview ng-show = "show" survey="selectedSurvey" ></survey-preview>
+		 			</div> 	
 				</li>
 			</ul>
 		</div>

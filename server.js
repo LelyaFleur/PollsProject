@@ -30,7 +30,7 @@
             // if there is an error retrieving, send the error. nothing after res.send(err) will execute
             if (err)
                 res.send(err)
-
+            console.log(surveys);
             res.json(surveys); // return all surveys in JSON format
         });
     });

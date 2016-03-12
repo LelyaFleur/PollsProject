@@ -52,6 +52,6 @@ angular.module('VotesProject').controller('DateTimeController',  function ($scop
     }, true);*/
 
     $scope.$on('$destroy', function() {
-        unwatch();
+      //  unwatch();
     });
 });
