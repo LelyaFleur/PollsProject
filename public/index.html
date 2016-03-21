@@ -18,9 +18,10 @@
 
     <div class="container-fluid">
         <div id="admin">
-            <a ng-href='#/admin'>Admin</a>
+            <a ng-href='#/admin' class="btn btn-info"><i class="glyphicon glyphicon-eye-open" ></i></a>
+            <a href="#/surveys" class="btn btn-info" ><span class="glyphicon glyphicon-home" ></span></a>
         </div>
-        <h1>Projecte Participació Ciutadana</h1>
+        <h2 class = "text-center">Projecte Participació Ciutadana</h1>
     </div>
     <div class = "container">
         <div ng-view></div>
@@ -28,6 +29,7 @@
 
 
     <script type="text/javascript" src="/javascript/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/javascript/node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
     <script src="/javascript/bower_components/angular/angular.js"></script>
     
     <script type="text/javascript" src="/javascript/bower_components/moment/min/moment.min.js"></script>
@@ -38,6 +40,7 @@
     <script src="/javascript/bower_components/angular-timer/dist/angular-timer.min.js"></script>        
     <script src="/javascript/bower_components/angular/angular-locale_ca-es.js"></script>   
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.2.4.js"></script>
+
 
     <script type="text/javascript" src="/javascript/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
@@ -52,6 +55,7 @@
 
     <!-- Directives -->
     <script src="/javascript/directives/survey-preview.js"></script>
+    <script src="/javascript/directives/survey.js"></script>
     <script src="/javascript/directives/survey-results.js"></script>
     <script src="/javascript/directives/new-survey.js"></script> 
     <script src="/javascript/directives/focus-me.js"></script>  
@@ -72,6 +76,7 @@
 
     <!-- Services -->
     <script src="/javascript/services/survey.js"></script>
+    <script src="/javascript/services/socket.js"></script>
          
   </body>
 

@@ -1,0 +1,35 @@
+<section>
+	<div class = "row">
+		<div class="col-xs-12">
+			<form name = "surveyForm" ng-submit = "surveyForm.$valid && sendSurvey()" novalidate>
+			   <ol>
+				    <li ng-repeat = "question in survey.questions" ng-init = "number = $index">
+				      {{question.text}}<br>
+				      <div ng-repeat = "answer in question.choices">
+				        <input type="radio" name="answer{{number+1}}"  ng-value = "answer._id" ng-disabled="!canVote" ng-model = "answers[number]" ng-required = "true" / > {{answer.text}}<br>
+				      </div>
+				    </li>
+				</ol>
+				<div class="col-xs-3 col-xs-offset-9 col-md-2 col-md-offset-10" ng-show = "canVote">
+					<input type = "submit" class="btn btn-info" ng-disabled = "!surveyForm.$valid" value = "Enviar"/>
+				</div>
+		    </form>
+		</div>
+	</div>
+	<div class = "row">
+		<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 ">	
+			<div ng-show = "!canVote">		
+				<button class = "btn btn-info" ng-click="showPopup()">Participar</button>	
+			</div>		
+		</div>
+		<p>{{message}}</p>
+	</div>
+		
+		<!--<div ng-show = "showTimer">
+			<timer interval="1000" countdown="cntd">{{countdown}}</timer>
+		</div>-->
+		
+
+	</div> 
+		
+</section>

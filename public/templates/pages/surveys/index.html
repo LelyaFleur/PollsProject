@@ -3,9 +3,9 @@
 	<div class="row">
 	    <div class= "col-md-6 col-md-offset-3"> 
 			<ul class="list-group">
-			 	<li class="list-group-item list-group-item-success" ng-repeat="survey in surveys | filter: {state: 2}" >
-			  		
-		  		 	<a ng-click="show = !show; selectSurvey(survey); $event.preventDefault(); $event.stopPropagation();" >{{survey.title}}</a>	
+			 	<li class="list-group-item list-group-item-success" ng-repeat="survey in surveys | filter: {state: 2}" >			  		
+		  		 	<a ng-click="show = !show; selectSurvey(survey); $event.preventDefault(); $event.stopPropagation();" class = "darkGrey" >{{survey.title}}</a>
+		  		 	<i class = "glyphicon glyphicon-ok gray pull-right"></i>	
 		  		 	<div ng-if="selectedSurvey === survey">
   						<survey-results ng-show = "show" survey="selectedSurvey" ></survey-results>
       				</div>  		
@@ -14,9 +14,10 @@
 			<!--<h3>Consultes overtas</h3>-->
 			<ul class="list-group">
 			 	<li class="list-group-item list-group-item-warning" ng-repeat="survey in surveys | filter: {state: 1}">
-		  		 	<a ng-click="show = !show; selectSurvey(survey); $event.preventDefault(); $event.stopPropagation();">{{survey.title}}</a>	
+		  		 	<a ng-click="show = !show; selectSurvey(survey); $event.preventDefault(); $event.stopPropagation();" class = "darkGrey">{{survey.title}}</a>
+		  		 	<i class = "glyphicon glyphicon-hourglass gray pull-right"></i>	
 		  		 	<div ng-if="selectedSurvey === survey">
-		  				<survey-preview ng-show = "show" survey="selectedSurvey" ></survey-preview>
+		  				<survey ng-show = "show" survey="selectedSurvey" ></survey>
 		 			</div> 
 				</li>
 			</ul>

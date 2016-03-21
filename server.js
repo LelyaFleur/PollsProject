@@ -1,4 +1,4 @@
-// set up ========================
+    // set up ========================
     var express  = require('express');
     var app      = express();                               // create our app w/ express
     var mongoose = require('mongoose');                     // mongoose for mongodb
@@ -6,6 +6,55 @@
     var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
     var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
     var Survey = require('./models/survey');
+
+    var server = null;
+    var io = null; // Socket io instance
+
+    function startSurvey(survey) {
+        var id = survey._id;
+        
+        
+        var now = new Date().valueOf();
+        
+        
+        var time = survey.publishDate.startDate.valueOf() - now;
+       
+        console.log("title: " + survey.title); 
+        console.log("state: " + survey.state); 
+        console.log("start: " + survey.publishDate.startDate.valueOf());
+        console.log("end: " + now);
+        console.log("time to wait:" + time); 
+        setTimeout(function () {
+            Survey.findOne({_id: id}, function (err, survey) {
+                survey.state = 1;
+                survey.save();
+                io.sockets.emit('status', { status: 1, id: survey._id });
+                endSurvey(survey);
+                // TODO Call io
+            });
+        }, time);
+    }
+
+    function endSurvey(survey) {
+        var id = survey._id;
+        var now = new Date().valueOf();
+        var time = survey.publishDate.endDate.valueOf() - now;
+        console.log("title: " + survey.title); 
+        console.log("state: " + survey.state); 
+        console.log("start: " + survey.publishDate.startDate.valueOf());
+        console.log("end: " + now);
+        console.log("time to wait:" + time);  
+        setTimeout(function () {
+            Survey.findOne({_id: id}, function (err, survey) {
+                survey.state = 2;
+                survey.save();
+                io.sockets.emit('status', { status: 2, id: survey._id });
+                console.log("title: " + survey.title);
+                // TODO Call io
+            });
+            console.log("title: " + survey.title);
+        }, time);
+    }
     
     // configuration =================
 
@@ -55,7 +104,6 @@
         Survey.findById(surveyId, {submissions: 0, votes:0}, function(err, survey) {
           if (err) 
             res.send(err)
-
             // show the one survey
             console.log(survey);
             res.json(survey);
@@ -83,8 +131,7 @@
 
     });
 
-    // update survey 
-    
+    // update survey   
 
     app.put('/api/surveys/:id/:dni', function(req, res) {
         console.log(req.body);
@@ -111,27 +158,7 @@
             }else{
                 res.json({ message: 'Did not update!' });
             }
-        });   
-             
-      
-        
-       /* */
-         /* for(var i in submissions){
-            Survey.update({_id: id, questions: {$elemMatch: {_id : submissions[i].questionId}}, choices: {$elemMatch: {_id : submissions[i].answerId}}  , 'choices._id' : submissions[i].answerId},
-                   {'$inc': {'questions.$.choices.$.votes': 1}}{'$set': {'questions.$.text' : "blabla"}},
-                    function(err, data) { 
-                        if(err) console.log(err);
-
-                        console.log(data);
-                     }
-            );
-        }
-       /* Meetings.update(
-           { _id: meetingId },
-           { $addToSet: { messages: 'hey there' } }
-)*/
-        
-        
+        });
     });
 
     // create survey 
@@ -140,6 +167,13 @@
         var survey = new Survey(req.body);      // create a new instance of the Survey model
           // 
         console.log(req.body);
+       /* setTimeout(function() {
+          io.sockets.emit('status', { status: 1 });
+          setTimeout(function(){
+            io.sockets.emit('status',{status:2});
+            }, 1000);          
+        }, 1000);*/
+    
 
         // save the survey and check for errors
         survey.save(function(err) {
@@ -173,12 +207,53 @@
         });
     });
 
+    /*var countdown = 1000;  
+    setInterval(function() {  
+      countdown--;
+      io.sockets.emit('timer', { countdown: countdown });
+    }, 1000);*/
+
      // application -------------------------------------------------------------
     app.get('*', function(req, res) {
         res.sendFile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
     });
 
+    function initServer() {
+        // listen (start app with node server.js) ======================================
+        server = app.listen(8080); 
+        io = require('socket.io').listen(server);
 
-    // listen (start app with node server.js) ======================================
-    app.listen(8080);
-    console.log("App listening on port 8080");
+        console.log("App listening on port 8080");
+    }
+
+    function checkStates(err, surveys) {
+        var now = new Date().valueOf();
+        console.log("Checking states...");
+        console.log(surveys);
+        surveys.forEach(function (survey) {
+            
+            var start = survey.publishDate.startDate.valueOf();
+            var end = survey.publishDate.endDate.valueOf();
+            if (now >= end) {
+                survey.state = 2;
+            } else if (now >= start) {
+                survey.state = 1;
+            } else {
+                survey.state = 0;
+            }
+            survey.save();
+
+            switch (survey.state) {
+                case 0:
+                    startSurvey(survey);
+                    break;
+                case 1:
+                    endSurvey(survey);
+                    break;
+            }
+        });
+
+        initServer();
+    }
+
+    Survey.find({state: { $lt: 2 }}, checkStates);

@@ -34,16 +34,16 @@ angular.module('VotesProject').controller('SurveyResultsController',
     		var  className;
     		switch (survey.state){
     			case 0: 
-    				className = "list-group-item-danger";
+    				className = "list-group-item-warning";
     				break;
 				case 1: 
-					className = "list-group-item-warning";
-					break;
-				case 2:
 					className = "list-group-item-info";
 					break;
+				case 2:
+					className = "list-group-item-success";
+					break;
 				default:
-        			className = "list-group-item-info";
+        			className = "list-group-item-success";
     		}
 		    return className;
     	};    	   

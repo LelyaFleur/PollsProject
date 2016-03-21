@@ -1,11 +1,12 @@
-angular.module('VotesProject').controller('NewSurveyController', ['Survey', '$scope', 
+angular.module('VotesProject').controller('NewSurveyController', ['Survey', 'Socket', '$scope', 
 
-  function(Survey, $scope){       
+  function(Survey, Socket, $scope){       
         $scope.newSurvey = { title: '',
                       questions: [{text: '',
                                       choices: [{text:'', votes: 0}]}
                        ],
-                       publishDate: {startDate: new Date(), endDate: new Date()}
+                       publishDate: {startDate: new Date(), endDate: new Date()},
+                       state: 0
                      };
 
 
@@ -57,7 +58,8 @@ angular.module('VotesProject').controller('NewSurveyController', ['Survey', '$sc
                         questions: [{text: '',
                                            choices: [{text:'', votes: 0}]}
                       ],
-                         publishDate: {startDate: new Date(), endDate: new Date()}
+                         publishDate: {startDate: new Date(), endDate: new Date()},
+                         state: 0
                   }; 
                       $scope.surveys = data;
                       $scope.showForm = false;                     

@@ -1,27 +1,11 @@
 angular.module('VotesProject').controller('SurveyController',
 
-	function($scope, $timeout, ModalService, Survey){
-	      	
-	      	$scope.participation = false;
+	function($scope, $timeout, ModalService, Survey, Socket){
 	      	$scope.canVote = false;
 	      	$scope.showTimer = false;
-	      	$scope.cntd = 0;
 	      	$scope.DNI = undefined;
+	      	$scope.countdown = undefined;
 	      	$scope.answers = {};
-	      	var a = moment("2016-03-08 23:47:26").unix();
-	      	var b = moment("2013-03-08 23:50:26").unix();
-	      	var dateNow = moment().unix();
-	      	$scope.startDate = new Date("Tue Mar 08 2016 23:19:15 GMT+0100").getTime();
-	      	$scope.endDate = new Date("Tue Mar 08 2016 23:19:35 GMT+0100").getTime();
-	      
-	      	$timeout(function(){
-	      		$scope.cntd = 100; 
-    			$scope.showTimer = true; 
-    			$scope.participation  = true;
-    			  		
-    		},6000);  
-
-	      	console.log("startDate: " + a);
 			
 	      	$scope.sendSurvey = function() {
 	      		var submission = [];
@@ -36,15 +20,15 @@ angular.module('VotesProject').controller('SurveyController',
 	      		}
 
 	      		Survey.update($scope.survey._id, $scope.DNI, submission)
-	      		.success(function(data){
-	      			console.log(data);
-	      			$scope.canVote = false;
-	      		})
-	      		.error(function(data){
-	      			console.log(data);
-	      		})
+		      		.success(function(data){
+		      			console.log(data);
+		      			$scope.canVote = false;
+		      		})
+		      		.error(function(data){
+		      			console.log(data);
+		      		})
 
-	      		console.log(submission);
+		      		console.log(submission);
 	      	};
 
 	      	$scope.showPopup = function() {
