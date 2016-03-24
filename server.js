@@ -74,7 +74,7 @@
     app.get('/api/surveys', function(req, res) {
 
         // use mongoose to get all surveys in the database
-        Survey.find(null, {submissions: 0, votes: 0}, function(err, surveys) {
+        Survey.find(null, {submissions: 0, votes: 0, totalVotes:0}, function(err, surveys) {
             console.log(surveys);
             // if there is an error retrieving, send the error. nothing after res.send(err) will execute
             if (err)
@@ -101,7 +101,7 @@
     // get survey by id
     app.get('/api/surveys/:id', function(req, res) {
         var surveyId = req.params.id;
-        Survey.findById(surveyId, {submissions: 0, votes:0}, function(err, survey) {
+        Survey.findById(surveyId, {submissions: 0, votes:0, totalVotes:0}, function(err, survey) {
           if (err) 
             res.send(err)
             // show the one survey
@@ -152,6 +152,7 @@
                         console.log("choiceId." + aId);
                         doc.questions.id(qId).choices.id(aId).votes += 1;
                     };
+                    doc.totalVotes += 1;
                     doc.save();
                 }); 
                 res.json({ message: 'Updated!' });

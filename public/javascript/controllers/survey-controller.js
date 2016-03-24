@@ -1,12 +1,11 @@
 angular.module('VotesProject').controller('SurveyController',
 
-	function($scope, $timeout, ModalService, Survey, Socket){
+	function($scope, ModalService, Survey, Socket){
 	      	$scope.canVote = false;
 	      	$scope.showTimer = false;
 	      	$scope.DNI = undefined;
-	      	$scope.countdown = undefined;
 	      	$scope.answers = {};
-			
+	      	
 	      	$scope.sendSurvey = function() {
 	      		var submission = [];
 	      		var qAndA = {};
@@ -23,6 +22,10 @@ angular.module('VotesProject').controller('SurveyController',
 		      		.success(function(data){
 		      			console.log(data);
 		      			$scope.canVote = false;
+		      			$scope.answers = {};
+		      			$scope.surveyForm.$setPristine();
+		      			$scope.message = "Your vote has been send";  //translate
+
 		      		})
 		      		.error(function(data){
 		      			console.log(data);
@@ -67,12 +70,12 @@ angular.module('VotesProject').controller('SurveyController',
 	            		.success(function(data) {
            					 if(data){
            					 	console.log(data);
-           					 	$scope.message = "You have already paricipated,sorry.";
+           					 	$scope.message = "You have already paricipated,sorry."; //translate
            					 	$scope.canVote = false;
 
            					 }else{
            					 	console.log(data);
-           					 	$scope.message = "You can vote,ok.";
+           					 	$scope.message = "You can vote,ok."; //translate
            					 	$scope.DNI = result.DNI;
            					 	$scope.canVote = true;
            					 }

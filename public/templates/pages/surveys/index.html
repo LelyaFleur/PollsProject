@@ -1,26 +1,30 @@
-<div ng-controller = "SurveyListController">
-	<!--<h3>Consultes tancadas</h3>-->
-	<div class="row">
-	    <div class= "col-md-6 col-md-offset-3"> 
-			<ul class="list-group">
-			 	<li class="list-group-item list-group-item-success" ng-repeat="survey in surveys | filter: {state: 2}" >			  		
-		  		 	<a ng-click="show = !show; selectSurvey(survey); $event.preventDefault(); $event.stopPropagation();" class = "darkGrey" >{{survey.title}}</a>
-		  		 	<i class = "glyphicon glyphicon-ok gray pull-right"></i>	
-		  		 	<div ng-if="selectedSurvey === survey">
-  						<survey-results ng-show = "show" survey="selectedSurvey" ></survey-results>
-      				</div>  		
-				</li>
-			</ul>
-			<!--<h3>Consultes overtas</h3>-->
-			<ul class="list-group">
-			 	<li class="list-group-item list-group-item-warning" ng-repeat="survey in surveys | filter: {state: 1}">
-		  		 	<a ng-click="show = !show; selectSurvey(survey); $event.preventDefault(); $event.stopPropagation();" class = "darkGrey">{{survey.title}}</a>
-		  		 	<i class = "glyphicon glyphicon-hourglass gray pull-right"></i>	
-		  		 	<div ng-if="selectedSurvey === survey">
-		  				<survey ng-show = "show" survey="selectedSurvey" ></survey>
-		 			</div> 
-				</li>
-			</ul>
-		</div>
+
+<!--<h3>Consultes tancadas</h3>-->
+<div class="row">
+    <div class= "col-md-6 col-md-offset-3" ng-controller = "SurveyResultsController"> 
+		<ul class="list-group">
+		 	<li class="list-group-item list-group-item-success" ng-repeat="survey in surveys | filter: {state: 2}" >			  		
+	  		 	<a ng-click="show = !show; selectSurvey(survey); $event.preventDefault(); $event.stopPropagation();" class = "darkGrey" >{{survey.title}}</a>
+	  		 	<i class = "glyphicon glyphicon-ok gray pull-right"></i>	
+	  		 	<div ng-if="selectedSurvey === survey">
+						<survey-results ng-show = "show" survey="selectedSurvey" ></survey-results>
+  				</div>  		
+			</li>
+		</ul>
+		<!--<h3>Consultes overtas</h3>-->
+		<ul class="list-group" ng-controller = "SurveyListController">
+		 	<li class="list-group-item list-group-item-warning" ng-repeat="survey in surveys | filter: {state: 1}">
+	  		 	<a ng-click="show = !show; selectSurvey(survey); $event.preventDefault(); $event.stopPropagation();" class = "darkGrey">{{survey.title}}</a>
+	  		 	<i class = "glyphicon glyphicon-hourglass gray pull-right"></i>	
+	  		 	<div ng-if="selectedSurvey === survey" class = "pull-right timePhrase">
+	  		 		<timer ng-show = "show"  countdown="getCountdown(survey)" interval="1000" language = "ca">{{dayUnit}}&nbsp;</timer> 
+	  		 	</div>  		 	
+	  		 	
+	  		 	<div ng-if="selectedSurvey === survey">
+	  				<survey ng-show = "show" survey="selectedSurvey" ></survey>
+	 			</div> 
+			</li>
+		</ul>
 	</div>
 </div>
+

@@ -21,7 +21,8 @@ var SurveySchema = new mongoose.Schema({
 	questions: [questionSchema],
 	submissions: [submissionSchema],
 	publishDate: { startDate: Date, endDate: Date },
-	state: Number
+	state: Number,
+	totalVotes: Number
 
 });
 

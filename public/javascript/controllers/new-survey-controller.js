@@ -6,7 +6,8 @@ angular.module('VotesProject').controller('NewSurveyController', ['Survey', 'Soc
                                       choices: [{text:'', votes: 0}]}
                        ],
                        publishDate: {startDate: new Date(), endDate: new Date()},
-                       state: 0
+                       state: 0,
+                       totalVotes: 0
                      };
 
 
@@ -59,7 +60,8 @@ angular.module('VotesProject').controller('NewSurveyController', ['Survey', 'Soc
                                            choices: [{text:'', votes: 0}]}
                       ],
                          publishDate: {startDate: new Date(), endDate: new Date()},
-                         state: 0
+                         state: 0,
+                         totalVotes: 0
                   }; 
                       $scope.surveys = data;
                       $scope.showForm = false;                     

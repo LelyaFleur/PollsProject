@@ -1,6 +1,6 @@
 angular.module('VotesProject').controller('SurveyResultsController',
 	
-	function($scope, Survey){
+	function($scope, Survey, Socket){
 		$scope.showForm = false;
 		$scope.selectedSurvey = undefined;		
 		
@@ -9,6 +9,13 @@ angular.module('VotesProject').controller('SurveyResultsController',
 	        .success(function(data) {
 	            $scope.surveys = data;
 	            console.log(data);
+	            $scope.surveys.forEach(function(survey){
+	            	Socket.on('status', function (data) {
+  						console.log("title: " + survey.title + "  change state:" + survey.state);
+  						if(survey._id === data.id)
+    					survey.state = data.status; 
+  					}); 
+	            });
 	        })
 	        .error(function(data) {
 	            console.log('Error: ' + data);

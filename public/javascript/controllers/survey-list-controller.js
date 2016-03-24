@@ -2,7 +2,7 @@ angular.module('VotesProject').controller('SurveyListController',
 	function($scope, Survey, Socket){
 		$scope.showForm = false;
 		
-		$scope.selectedSurvey = undefined
+		$scope.selectedSurvey = undefined;
 		
 	    // when landing on the page, get all surveys and show them
 	    Survey.all()
@@ -24,4 +24,21 @@ angular.module('VotesProject').controller('SurveyListController',
 	    $scope.selectSurvey = function(survey) {
 		    $scope.selectedSurvey = survey;
     	};
+
+    	$scope.getCountdown = function(survey) {
+    		if(survey.state === 1) {
+	      			var now = new Date().valueOf();
+	      			console.log("now: "  + now);
+	      			var end = new Date(survey.publishDate.endDate);
+	      			var diff =  end.valueOf() - now;
+	      			var countdown =  parseInt((diff/1000));
+	      			console.log("countdown: " + countdown);
+      		}
+      		return countdown; 
+    	};
+
+    	
+
+
+	      	
 	});
