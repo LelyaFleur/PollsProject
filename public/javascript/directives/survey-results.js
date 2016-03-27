@@ -5,7 +5,8 @@ angular.module('VotesProject')
 	      templateUrl: 'templates/directives/survey-results.html',
 	      replace: true,
 	      scope: {
-	      	survey: "="
+	      	survey: "=",
+	      	export: "="
 	      },
 	      controller: 'SurveyController'
 	    }

@@ -14,35 +14,40 @@
 			</a></h3>		
 			
 
-			<ul class="list-group">
+			<ul class="list-group" >
 				 <li class="list-group-item" ng-repeat="survey in surveys | filter: {state: 2}" ng-class="getClass(survey)">
 				 	<a ng-click="show = !show; selectSurvey(survey);" class = "darkGrey" >{{survey.title}}</a>
 				 	<i class = "glyphicon glyphicon-ok gray pull-right"></i>
 			 		<div ng-if="selectedSurvey === survey">
-  						<survey-results ng-show = "show" survey="selectedSurvey" ></survey-results>
+  						<survey-results ng-show = "show" survey="selectedSurvey" export="true"></survey-results>
       				</div>	
 				</li>
 			</ul>
-			<ul class="list-group">
-				 <li class="list-group-item" ng-repeat="survey in surveys | filter: {state: 1}" ng-class="getClass(survey)">
-				 	<a ng-click="show = !show; selectSurvey(survey);" class = "darkGrey" >{{survey.title}}</a>
-				 	<i class = "glyphicon glyphicon-hourglass gray pull-right"></i>
-			 		<div ng-if="selectedSurvey === survey">
-		  				<survey-preview ng-show = "show" survey="selectedSurvey" ></survey-preview>
-		 			</div> 	
-				</li>
-			</ul>
-			<ul class="list-group">
-				 <li class="list-group-item" ng-repeat="survey in surveys | filter: {state: 0}" ng-class="getClass(survey)">
-				 	<a ng-click="show = !show; selectSurvey(survey);" class = "darkGrey" >{{survey.title}}</a>
-				 	<a ng-click="removeSurvey(survey)">
-	  						<span class="glyphicon glyphicon-remove gray pull-right"></span>
-	  				</a>
-			 		<div ng-if="selectedSurvey === survey">
-		  				<survey-preview ng-show = "show" survey="selectedSurvey"></survey-preview>
-		 			</div> 	
-				</li>
-			</ul>
+			
+				<ul class="list-group">
+					 <li class="list-group-item" ng-repeat="survey in surveys | filter: {state: 1}" ng-class="getClass(survey)">
+					 	<a ng-click="show = !show; selectSurvey(survey);" class = "darkGrey" >{{survey.title}}</a>
+					 	<i class = "glyphicon glyphicon-hourglass gray pull-right"></i>
+					 	<div ng-if="selectedSurvey === survey" class = "pull-right timePhrase">
+				  		 		<timer ng-show = "show"  countdown="getCountdown(survey)" interval="1000" language = "ca">{{dayUnit}}&nbsp;</timer> 
+				  		 	</div> 
+				 		<div ng-if="selectedSurvey === survey">
+			  				<survey-preview ng-show = "show" survey="selectedSurvey" ></survey-preview>
+			 			</div> 	
+					</li>
+				</ul>
+				<ul class="list-group">
+					 <li class="list-group-item" ng-repeat="survey in surveys | filter: {state: 0}" ng-class="getClass(survey)">
+					 	<a ng-click="show = !show; selectSurvey(survey);" class = "darkGrey" >{{survey.title}}</a>
+					 	<a ng-click="removeSurvey(survey)">
+		  						<span class="glyphicon glyphicon-remove gray pull-right"></span>
+		  				</a>
+				 		<div ng-if="selectedSurvey === survey">
+			  				<survey-preview ng-show = "show" survey="selectedSurvey"></survey-preview>
+			 			</div> 	
+					</li>
+				</ul>
+			
 		</div>
 
 	</div>

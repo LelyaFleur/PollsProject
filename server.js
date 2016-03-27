@@ -88,7 +88,7 @@
     app.get('/api/admin', function(req, res) {
 
         // use mongoose to get all surveys in the database
-        Survey.find(null, {submissions: 0}, function(err, surveys) {
+        Survey.find(null, function(err, surveys) {
             console.log(surveys);
             // if there is an error retrieving, send the error. nothing after res.send(err) will execute
             if (err)
@@ -102,6 +102,19 @@
     app.get('/api/surveys/:id', function(req, res) {
         var surveyId = req.params.id;
         Survey.findById(surveyId, {submissions: 0, votes:0, totalVotes:0}, function(err, survey) {
+          if (err) 
+            res.send(err)
+            // show the one survey
+            console.log(survey);
+            res.json(survey);
+        });
+
+    });
+
+     // get submissions by id
+    app.get('/api/admin/submissions/:id', function(req, res) {
+        var surveyId = req.params.id;
+        Survey.findById(surveyId, 'submissions', function(err, survey) {
           if (err) 
             res.send(err)
             // show the one survey

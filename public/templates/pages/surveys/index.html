@@ -7,7 +7,7 @@
 	  		 	<a ng-click="show = !show; selectSurvey(survey); $event.preventDefault(); $event.stopPropagation();" class = "darkGrey" >{{survey.title}}</a>
 	  		 	<i class = "glyphicon glyphicon-ok gray pull-right"></i>	
 	  		 	<div ng-if="selectedSurvey === survey">
-						<survey-results ng-show = "show" survey="selectedSurvey" ></survey-results>
+						<survey-results ng-show = "show" survey="selectedSurvey" export="false"></survey-results>
   				</div>  		
 			</li>
 		</ul>

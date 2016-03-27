@@ -10,6 +10,9 @@ angular.module('VotesProject').
  		find: function(id){
  			return $http({method: 'GET', url: "/api/surveys/" + id});
  		},
+ 		getSubmissions: function(id){
+ 			return $http({method: 'GET', url: "/api/admin/submissions/" + id});
+ 		},
  		validateDNI: function(id, dni){
  			return $http({method: 'GET', url: "/api/surveys/" + id + "/" + dni});
  		},

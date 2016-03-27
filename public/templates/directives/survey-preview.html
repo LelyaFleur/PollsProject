@@ -1,8 +1,9 @@
 <ul class="list-group">
 	<li class="list-group-item" ng-repeat = "question in survey.questions">
-	  <h4>{{$index+1}}. {{question.text}}</h4>     
+	  <h4 class = "darkGrey">{{$index+1}}. {{question.text}}</h4>     
 	  	<ul class="list-group">
-		 	<li class="list-group-item" ng-class="getClass(survey)" ng-repeat = "answer in question.choices">{{answer.text}}</li>  
+		 	<li class="list-group-item darkGrey choiceSize" ng-class="getClass(survey)" ng-repeat = "answer in question.choices">{{answer.text}}</li>  
 		</ul>
 	</li>
+	<p class ="timePhrase" style = "margin-bottom: 0px;">The survey will be closed at: {{survey.publishDate.endDate | date:'medium'}}</p>
 <ul>

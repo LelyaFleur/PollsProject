@@ -5,6 +5,21 @@ angular.module('VotesProject').controller('SurveyController',
 	      	$scope.showTimer = false;
 	      	$scope.DNI = undefined;
 	      	$scope.answers = {};
+	      	console.log("showExport:" + $scope.export);
+
+	      	$scope.exportVotes = function(){
+	      	/*var submissions = undefined;	      		
+	      		Survey.getSubmissions($scope.survey._id)
+	      		.success(function(data){
+	      			console.log(data.submissions);
+	      			submissions = data.submissions;
+	      		})
+	      		.error(function(data){
+					console.log(data);
+	      		});*/
+
+	      		return $scope.survey.submissions;      		
+	      	};
 	      	
 	      	$scope.sendSurvey = function() {
 	      		var submission = [];
